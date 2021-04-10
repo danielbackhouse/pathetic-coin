@@ -1,0 +1,23 @@
+{
+  "name": "dan_coin",
+  "version": "1.0.0",
+  "description": "Someone named a cryto currency after me :)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielbackhouse/dan_coin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielbackhouse/dan_coin/issues"
+  },
+  "homepage": "https://github.com/danielbackhouse/dan_coin#readme",
+  "dependencies": {
+    "jest": "^26.6.3"
+  }
+}
