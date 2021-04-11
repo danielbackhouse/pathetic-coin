@@ -12,6 +12,22 @@ const AND = 'AND'
 const JUMP = 'JUMP'
 const JUMPI = 'JUMPI'
 
+const OPCODE_MAP = {
+  STOP,
+  ADD,
+  PUSH,
+  MUL,
+  DIV,
+  SUB,
+  LT,
+  GT,
+  EQ,
+  OR,
+  AND,
+  JUMP,
+  JUMPI,
+};
+
 const EXECUTION_COMPLETE = 'Execution complete';
 const EXECUTION_LIMIT = 10000
 
@@ -114,8 +130,11 @@ class Interpreter{
   }
 }
 
+Interpreter.OPCODE_MAP = OPCODE_MAP
+module.exports = Interpreter;
+
 //const code = [PUSH, 1, PUSH, 0, PUSH, 4, PUSH, 99, JUMP]
 //const code = [PUSH, 4, PUSH, 3, EQ, PUSH, 2, PUSH, 3, LT, OR, 0, JUMP, STOP];
-const interpreter = new Interpreter();
-const ans = interpreter.runCode(code);
-console.log(ans)
+//const interpreter = new Interpreter();
+//const ans = interpreter.runCode(code);
+//console.log(ans)
