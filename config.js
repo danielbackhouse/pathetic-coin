@@ -9,6 +9,11 @@ const GENESIS_DATA = {
     }
 }
 
+const MILLISECONDS = 1; // Javascirpt count its timestamping system in milseconds
+const SECONDS = 1000 * MILLISECONDS
+const MINE_RATE = 13 * SECONDS
+
 module.exports = {
-    GENESIS_DATA
+    GENESIS_DATA,
+    MINE_RATE
 }; // exporting GENESIS_DATA as property in object to make it more extensbile for later
