@@ -63,6 +63,10 @@ class Block {
     static genesis(){
         return new this(GENESIS_DATA); // Genesis data is object that has the blockheaders field
     }
+
+    static vaildateBlock({ lastBlock, block }){
+        return new Promise();
+    }
 }
 
 module.exports = Block;
