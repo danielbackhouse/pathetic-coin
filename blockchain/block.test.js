@@ -51,7 +51,21 @@ describe('Block', () => {
                     timestamp: Date.now()
                 })).toEqual(1);
         });
-    });
+        it('increments difficulty up by 1 if mining was faster than 13 seconds', () =>{
+            expect(
+                Block.adjustDifficulty({
+                    lastBlock: {blockHeaders: { difficulty: 1, timestamp: Date.now()}},
+                    timestamp: Date.now()
+                })).toEqual(2);
+        });
+        it('increments difficulty down by 1 if mining was longer than 13 seconds', () =>{
+            expect(
+                Block.adjustDifficulty({
+                    lastBlock: {blockHeaders: { difficulty: 3, timestamp: 0}},
+                    timestamp: Date.now()
+                })).toEqual(2);
+        });
 
+    });
 
 });

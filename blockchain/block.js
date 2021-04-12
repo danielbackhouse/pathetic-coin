@@ -28,7 +28,7 @@ class Block {
         }
 
         if (difficulty <1){
-            difficulty = 1
+            return difficulty = 1
         }
 
         return difficulty + 1;
@@ -66,3 +66,4 @@ class Block {
 }
 
 module.exports = Block;
+
