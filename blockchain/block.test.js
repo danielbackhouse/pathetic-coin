@@ -1,6 +1,7 @@
 const { describe, it, expect, beforeEach } = require('@jest/globals');
 const { keccakHash } = require('../util');
 const Block  = require('./block');
+const { HASH_LENGTH } = require('./block')
 
 describe('Block', () => {
     describe('calculateBlockTargetHash()', () => {
@@ -65,6 +66,55 @@ describe('Block', () => {
                     timestamp: Date.now()
                 })).toEqual(2);
         });
+
+        describe('validateBlock', () => {
+
+            let block, lastBlock;
+
+            beforeEach( () => {
+                lastBlock = Block.genesis();
+                block = Block.mineBlock({lastBlock, beneficiary: 'me'})
+            })
+
+            it('Resolves when block is genesis block', () => {
+                expect(Block.validateBlock({block: Block.genesis(), })).resolves;
+            })
+
+            it('Resolves if block is valid', () => {
+                expect(Block.validateBlock({lastBlock, block})).resolves;
+            })
+
+            it('rejects when the parentHash is invalid', () => {
+                block.blockHeaders.parentHash = 'foo';
+
+                expect(Block.validateBlock({lastBlock, block})).rejects;
+            })
+
+            it('rejects if the difficulty has changed by more than 1', () => {
+                block.blockHeaders.difficulty = lastBlock.blockHeaders.difficulty + 3;
+
+                expect(Block.validateBlock({lastBlock, block})).rejects;
+            })
+
+            it('rejects if the number increment is more than 1', () => {
+                block.blockHeaders.number = lastBlock.blockHeaders.number + 2
+
+                expect(Block.validateBlock({lastBlock, block})).rejects;
+            })
+
+            it('rejects when the proof of work requirment is not met', () => {
+                const originalCalculateBlockTargetHash = Block.calculatedBlockTargetHash
+
+                Block.calculatedBlockTargetHash = () => {
+                    return '0'.repeat(HASH_LENGTH)
+                }
+
+                expect(Block.validateBlock({lastBlock, block})).rejects;
+
+                Block.calculatedBlockTargetHash = originalCalculateBlockTargetHash
+            })
+
+        })
 
     });
 

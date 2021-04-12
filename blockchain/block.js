@@ -67,6 +67,42 @@ class Block {
     static vaildateBlock({ lastBlock, block }){
         return new Promise();
     }
+
+    static validateBlock({ lastBlock, block}){
+        return new Promise( (resolve, reject) => {
+            if (keccakHash(block) === keccakHash(Block.genesis())){
+                return resolve();
+            }
+
+            if (keccakHash(lastBlock.blockHeaders) != block.blockHeaders.parentHash){
+                return reject(
+                    new Error("The parent hash must be a hash of the last block's headers")
+                );
+            }
+
+            if (block.blockHeaders.number != lastBlock.blockHeaders.number + 1){
+                return reject(new Error('THe block must increment the number by 1'));
+            }
+
+            if ( Math.abs(block.blockHeaders.difficulty - lastBlock.blockHeaders.difficulty) > 1){
+                return reject(new Error('The difficulty must only adjust by 1'));
+            }
+
+            const target = Block.calculatedBlockTargetHash({lastBlock});
+            const { blockHeaders } = block;
+            const { nonce } = blockHeaders;
+            const truncatedBlockHeaders = {...blockHeaders};
+            delete truncatedBlockHeaders.nonce;
+            const header = keccakHash(truncatedBlockHeaders);
+            const underTargetHash = keccakHash(header + nonce)
+
+            if (underTargetHash > target){
+                return reject(new Error('The underTarget hash was greater than the target, does not meet proof of work requirment'))
+            }
+
+            return resolve();
+        });
+    }
 }
 
 module.exports = Block;
