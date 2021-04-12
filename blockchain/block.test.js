@@ -112,7 +112,7 @@ describe('Block', () => {
                 expect(Block.validateBlock({lastBlock, block})).rejects;
 
                 Block.calculatedBlockTargetHash = originalCalculateBlockTargetHash
-            })
+            });
 
         })
 

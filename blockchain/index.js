@@ -1,4 +1,5 @@
 const { tsConstructSignatureDeclaration } = require('@babel/types');
+const { rejects } = require('assert');
 const Block = require('./block')
 
 class Blockchain {
@@ -7,7 +8,17 @@ class Blockchain {
     }
 
     addBlock({block}){
-        this.chain.push(block);
+        return new Promise((resolve, reject) => {
+            Block.validateBlock({
+                lastBlock: this.chain[this.chain.length-1],
+                block
+            }).then( () => {
+                this.chain.push(block);
+
+                return resolve();
+            }).catch(error => reject(error));
+        })
+
     }
 }
 
