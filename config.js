@@ -2,7 +2,7 @@ const GENESIS_DATA = {
     blockHeaders: { // Blockheader is a field, parent hash is a field of he blockheader field
         parentHash: '--genesis-parent-hash--',
         beneficiary: '--genesis-beneficiary',
-        difficulty: 1000,
+        difficulty: 100000,
         number: 0,
         timestamp: '--genesis-timestamp--',
         nonce: 0
